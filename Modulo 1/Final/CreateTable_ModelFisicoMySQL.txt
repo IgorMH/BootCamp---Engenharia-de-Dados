@@ -1,0 +1,61 @@
+
+
+CREATE TABLE `carro` (
+  `CodCarro` int NOT NULL,
+  `Placa` varchar(45) NOT NULL,
+  `Marca` varchar(45) NOT NULL,
+  `Modelo` varchar(45) NOT NULL,
+  `Ano` varchar(45) NOT NULL,
+  `Chassi` varchar(45) NOT NULL,
+  `Cor` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`CodCarro`),
+  UNIQUE KEY `Placa_UNIQUE` (`Placa`),
+  UNIQUE KEY `Chassi_UNIQUE` (`Chassi`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `cliente` (
+  `CodCliente` int NOT NULL AUTO_INCREMENT,
+  `Nome` varchar(45) DEFAULT NULL,
+  `CPF` varchar(45) NOT NULL,
+  `Sexo` varchar(20) DEFAULT NULL,
+  `Estado` varchar(45) NOT NULL,
+  `Cidade` varchar(45) DEFAULT NULL,
+  `Bairro` varchar(45) DEFAULT NULL,
+  `Numero` varchar(45) DEFAULT NULL,
+  `Rua` varchar(45) DEFAULT NULL,
+  `TelefoneFixo` varchar(45) DEFAULT NULL,
+  `TelefoneCelular` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`CodCliente`),
+  UNIQUE KEY `CPF_UNIQUE` (`CPF`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `sinistro` (
+  `CodSinistro` int NOT NULL,
+  `HoraSinistro` int DEFAULT NULL,
+  `DataSinistro` date DEFAULT NULL,
+  `LocalSinistro` varchar(45) DEFAULT NULL,
+  `Condutor` varchar(45) DEFAULT NULL,
+  `Carro_CodCarro` int NOT NULL,
+  PRIMARY KEY (`CodSinistro`,`Carro_CodCarro`),
+  KEY `fk_Sinistro_Carro1_idx` (`Carro_CodCarro`),
+  CONSTRAINT `fk_Sinistro_Carro1` FOREIGN KEY (`Carro_CodCarro`) REFERENCES `carro` (`CodCarro`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+CREATE TABLE `apolice` (
+  `CodApolice` int NOT NULL,
+  `ValorCobertura` decimal(10,0) NOT NULL,
+  `ValorFranquia` decimal(10,0) DEFAULT NULL,
+  `DataInicioVigencia` date NOT NULL,
+  `DataFimVigencia` date NOT NULL,
+  `Cliente_CodCliente` int NOT NULL,
+  `Carro_CodCarro` int NOT NULL,
+  PRIMARY KEY (`CodApolice`),
+  KEY `fk_Apolice_Cliente_idx` (`Cliente_CodCliente`),
+  KEY `fk_Apolice_Carro1_idx` (`Carro_CodCarro`),
+  CONSTRAINT `fk_Apolice_Carro1` FOREIGN KEY (`Carro_CodCarro`) REFERENCES `carro` (`CodCarro`),
+  CONSTRAINT `fk_Apolice_Cliente` FOREIGN KEY (`Cliente_CodCliente`) REFERENCES `cliente` (`CodCliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
