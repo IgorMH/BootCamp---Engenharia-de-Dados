@@ -7,4 +7,3 @@ Repositorio dedicado aos desafios e exercicios do BootCamp.
 
 ## ✔️ Técnicas e tecnologias utilizadas
 * `SQL`
-* `Python`
